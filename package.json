@@ -44,5 +44,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "lint-staged": {
+    "*.js": "npm run lint",
+    "*.@(scss|css)": "npm run stylelint"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run hooks:commit"
+    }
   }
 }
