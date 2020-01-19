@@ -1,17 +1,14 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-import { generetaRandom, queue, formatDate } from './utils';
+import { generetaRandom, createQueue, formatDate } from './utils';
 
 import './App.css';
 
-class App extends Component {
+class App extends PureComponent {
   constructor() {
     super();
     this.state = { logs: [] };
-  }
-
-  componentDidMount() {
-    this.taskRunner = queue();
+    this.taskRunner = createQueue();
   }
 
   generateLog = (name, timeout) => `${formatDate(new Date())} : ${name} was pressed with ${timeout}s timeout`;
@@ -29,10 +26,10 @@ class App extends Component {
   }
 
   onAddTaskToQueue = (name) => (
-    this.taskRunner.push(next => (name ? this.addLog(name, next) : this.resetLogs(next)))
+    this.taskRunner.push(next => (this.addLog(name, next)))
   );
 
-  resetLogs = next => this.setState({ logs: [] }, () => next());
+  resetLogs = () => this.taskRunner.push(next => this.setState({ logs: [] }, () => next()))
 
   render() {
     const { logs } = this.state;
@@ -63,8 +60,8 @@ class App extends Component {
           </button>
         </div>
         <div className="app__logs">
-          {logs.map(log => (
-            <p className="app__log">
+          {logs.map((log, index) => (
+            <p key={index.toString()} className="app__log">
               {log}
             </p>
           ))}
@@ -72,7 +69,7 @@ class App extends Component {
         <div className="app__buttons app__buttons--end">
           <button
             type="button"
-            onClick={() => this.onAddTaskToQueue()}
+            onClick={() => this.resetLogs()}
             className="app__button"
           >
             Reset

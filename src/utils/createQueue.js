@@ -1,4 +1,4 @@
-export const queue = () => {
+export const createQueue = () => {
   let running = 0;
   const taskQueue = [];
 
