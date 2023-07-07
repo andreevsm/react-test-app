@@ -12,7 +12,7 @@
     "react-scripts": "3.3.0"
   },
   "devDependencies": {
-    "stylelint": "^11.1.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^19.0.0",
     "lint-staged": "^9.4.2",
     "eslint-config-airbnb": "^18.0.1",
